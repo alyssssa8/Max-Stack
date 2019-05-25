@@ -1,0 +1,69 @@
+class MaxStack {
+private:
+    stack<int>myStack;
+    stack<int>myMax;
+public:
+    
+    /** initialize your data structure here. */
+    MaxStack() {     
+    }
+    
+    void push(int x) {
+        if (myMax.empty()||myMax.top()<=x ){
+            myMax.push(x);
+        }
+        myStack.push(x);
+    }
+    
+    int pop() {
+        int returnVal = myStack.top();
+        if(myStack.top() == myMax.top()){
+            myMax.pop();
+        }
+      
+        myStack.pop();
+        return returnVal;
+        
+    }
+    
+    int top() {
+       return myStack.top();
+        
+    }
+    
+    int peekMax() {
+        return myMax.top();     
+    }
+    
+    int popMax() {
+        int returnVal = myMax.top(); 
+        stack<int>temp;
+        
+        while(myMax.top()!=myStack.top()){
+            temp.push(myStack.top());
+            myStack.pop();
+        }
+        myMax.pop();
+        myStack.pop();
+        while(!temp.empty()){
+            myStack.push(temp.top());
+            if(myMax.empty()||temp.top()>= myMax.top()){
+                myMax.push(temp.top());
+            }
+            temp.pop();
+        }
+        
+       
+        return returnVal;     
+    }
+};
+
+/**
+ * Your MaxStack object will be instantiated and called as such:
+ * MaxStack* obj = new MaxStack();
+ * obj->push(x);
+ * int param_2 = obj->pop();
+ * int param_3 = obj->top();
+ * int param_4 = obj->peekMax();
+ * int param_5 = obj->popMax();
+ */
